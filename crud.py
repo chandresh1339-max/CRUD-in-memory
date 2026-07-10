@@ -1,11 +1,21 @@
+import logging
+
 # Simple In-Memory Database
 db = {}
+
+logger = logging.getLogger("crud")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    _handler = logging.FileHandler("logs.txt")
+    _handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    logger.addHandler(_handler)
 
 
 def create_user(user_id: int, name: str, email: str) -> dict:
     if user_id in db:
         raise ValueError(f"User with ID {user_id} already exists.")
     db[user_id] = {"name": name, "email": email}
+    logger.info(f"User created: id={user_id}, name={name}, email={email}")
     # Return the user data after creation
     return db[user_id]
 
