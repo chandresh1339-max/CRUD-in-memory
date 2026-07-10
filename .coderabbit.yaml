@@ -1,0 +1,10 @@
+# .coderabbit.yaml
+language: "en"
+reviews:
+  profile: "chill" # Options: chill, assertive
+  auto_review:
+    enabled: true
+    drafts: false # Set to true if you want reviews on Draft PRs
+  path_filters:
+    - "!*.md" # Skip reviewing markdown documentation files
+    - "*.py" # Ensure it prioritizes Python files
