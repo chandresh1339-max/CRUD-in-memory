@@ -37,9 +37,9 @@ if __name__ == "__main__":
         print(f"Validation Error: {e}")
         print(e.json(indent=2))
 
+    main()
+
     print("--- 3. Successful Update ---")
     update_data = {"name": "Bob Parker", "email": "bob_parker@example.com"}
     updated = update_user(1, **update_data)
     print(f"Updated User: {updated}")
-
-    main()
