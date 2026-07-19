@@ -65,11 +65,11 @@ def read_user(user_id: int) -> UserResponse:
 def update_user(user_id: int, update_data: UserUpdate) -> UserResponse:
     if user_id not in db:
         raise KeyError(f"User with ID {user_id} not found.")
-    if update_data.name is not None:
-        db[user_id]["name"] = update_data.name
-    if update_data.email is not None:
-        db[user_id]["email"] = update_data.email
-    return db[user_id]
+        if update_data.name is not None:
+            db[user_id]["name"] = update_data.name
+        if update_data.email is not None:
+            db[user_id]["email"] = update_data.email
+        return db[user_id]
 
 
 def delete_user(user_id: int) -> str:
