@@ -42,7 +42,8 @@ if not logger.handlers:
     logger.addHandler(_handler)
 
 
-def create_user(user_data: UserCreate) -> UserResponse:
+def create_user(id: int, name: str, email: EmailStr) -> UserResponse:
+    user_data = UserCreate(id=id, name=name, email=email)
     if user_data.id in db:
         raise ValueError(f"User with ID {user_data.id} already exists.")
     user_response = UserResponse(
@@ -52,7 +53,6 @@ def create_user(user_data: UserCreate) -> UserResponse:
     logger.info(
         f"User created: id={user_data.id}, name={user_data.name}, email={user_data.email}"
     )
-    # Return the user data after creation
     return user_response
 
 
@@ -62,14 +62,18 @@ def read_user(user_id: int) -> UserResponse:
     return db[user_id]
 
 
-def update_user(user_id: int, update_data: UserUpdate) -> UserResponse:
+def update_user(
+    user_id: int, name: Optional[str] = None, email: Optional[EmailStr] = None
+) -> UserResponse:
     if user_id not in db:
         raise KeyError(f"User with ID {user_id} not found.")
-        if update_data.name is not None:
-            db[user_id]["name"] = update_data.name
-        if update_data.email is not None:
-            db[user_id]["email"] = update_data.email
-        return db[user_id]
+
+    update_data = UserUpdate(name=name, email=email)
+    if update_data.name is not None:
+        db[user_id] = db[user_id].copy(update={"name": update_data.name})
+    if update_data.email is not None:
+        db[user_id] = db[user_id].copy(update={"email": update_data.email})
+    return db[user_id]
 
 
 def delete_user(user_id: int) -> str:

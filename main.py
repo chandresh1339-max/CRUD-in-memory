@@ -25,7 +25,7 @@ if __name__ == "__main__":
     from pydantic import ValidationError
 
     print("--- 1. Successful Creation ---")
-    input_data = {"id": 1, "name": "Alice", "email": "alex@example.com"}
+    input_data = {"id": 3, "name": "Alice", "email": "alex@example.com"}
     created = create_user(**input_data)
     print(f"Created User: {created}")
 
