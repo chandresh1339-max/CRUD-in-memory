@@ -22,4 +22,24 @@ def main():
 
 
 if __name__ == "__main__":
+    from pydantic import ValidationError
+
+    print("--- 1. Successful Creation ---")
+    input_data = {"id": 1, "name": "Alice", "email": "alex@example.com"}
+    created = create_user(**input_data)
+    print(f"Created User: {created}")
+
+    print("---2. Input Validation Failure Triggered ----")
+    try:
+        bad_input_data = {"id": 43, "name": "B", "email": "not-an-email"}
+        bad_input_failure = create_user(**bad_input_data)
+    except ValidationError as e:
+        print(f"Validation Error: {e}")
+        print(e.json(indent=2))
+
+    print("--- 3. Successful Update ---")
+    update_data = {"name": "Bob Parker", "email": "bob_parker@example.com"}
+    updated = update_user(1, **update_data)
+    print(f"Updated User: {updated}")
+
     main()
